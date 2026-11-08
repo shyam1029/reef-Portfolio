@@ -2,3 +2,5 @@ node_modules
 dist
 *.tmp.glb
 .DS_Store
+CLAUDE.md
+.claude/
