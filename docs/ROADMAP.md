@@ -35,13 +35,22 @@ Goal: keep the core idea (an underwater 3D reef you travel through by scrolling)
 
 ## Phased plan
 
-### Phase 1 — React foundation (this change)
+### Phase 1 — React foundation ✅
 - Vite + React + TypeScript, dependencies via npm with a lockfile.
 - Scene rewritten with React Three Fiber + drei; one component per scene element.
 - Shaders moved to `.glsl` files with a shared noise chunk.
 - Content (projects, contact links, scroll sections) in one typed data file.
 - Fixes: load each GLB once (`useGLTF` caching), seeded placement, frame-rate independent animation, no tween stacking, LinkedIn URL.
 - Compressed GLBs (meshopt + WebP textures) via `gltf-transform`.
+
+### Phase 1.5 — Realistic underwater ✅
+- Depth fog with blue-green absorption, plus a depth-graded background that matches the fog at the horizon.
+- Animated caustics on the sand, kelp and every GLTF model (patched standard materials).
+- Sand with ripples, grain, patches and real diffuse lighting.
+- Water surface with Fresnel and sun glint from above, and Snell's window plus total internal reflection from below.
+- Volumetric-looking light shafts, marine snow, bubble streams, and instanced swaying kelp.
+- Underwater lens pass (refraction wobble, chromatic aberration, vignette); bloom softens below the surface.
+- Adaptive DPR via `PerformanceMonitor`.
 
 ### Phase 2 — Performance polish
 - Instanced corals and fish (`<Instances>` / `InstancedMesh`), so each model type is one draw call.

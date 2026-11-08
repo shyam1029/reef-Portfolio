@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { useGLTF } from '@react-three/drei';
 import { Mesh, MeshStandardMaterial } from 'three';
 import { sculptures, sunPosition } from './config';
+import { addCaustics } from '../lib/caustics';
 
 export function Crown() {
   const { scene } = useGLTF(sculptures.crown.url);
@@ -20,6 +21,7 @@ export function Crown() {
 
 export function TreasureChest() {
   const { scene } = useGLTF(sculptures.treasure.url);
+  useMemo(() => addCaustics(scene), [scene]);
   const { position, scale } = sculptures.treasure;
   return <primitive object={scene} position={position} rotation-y={Math.PI / 4} scale={scale} />;
 }

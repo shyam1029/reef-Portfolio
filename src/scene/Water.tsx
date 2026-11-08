@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { DoubleSide, ShaderMaterial } from 'three';
-import { floor, sunPosition, water } from './config';
+import { DoubleSide, ShaderMaterial, UniformsLib } from 'three';
+import { floor, water } from './config';
+import { underwaterUniforms } from './underwater';
 import { waterShader } from './shaders';
 
 export function Water() {
@@ -13,10 +14,13 @@ export function Water() {
           uTime: { value: 0 },
           uAmplitude: { value: water.amplitude },
           uNoiseScale: { value: water.noiseScale },
-          uSunPosition: { value: sunPosition },
+          uSunDir: underwaterUniforms.uSunDir,
+          uDepth: underwaterUniforms.uDepth,
+          ...UniformsLib.fog,
         },
         side: DoubleSide,
         transparent: true,
+        fog: true,
       }),
     [],
   );

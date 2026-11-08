@@ -5,6 +5,7 @@ import { AnimationMixer, Group, Object3D, Vector3 } from 'three';
 import { clone as cloneSkinned } from 'three/examples/jsm/utils/SkeletonUtils.js';
 import { fish, floor } from './config';
 import { createRandom } from '../lib/random';
+import { addCaustics } from '../lib/caustics';
 
 type Swimmer = { object: Object3D; mixer: AnimationMixer | null; speed: number; direction: Vector3 };
 
@@ -39,6 +40,7 @@ export function Fish() {
         });
       }
     });
+    addCaustics(group);
     return { group, swimmers };
   }, [gltfs]);
 

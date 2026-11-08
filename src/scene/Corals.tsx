@@ -3,6 +3,7 @@ import { useGLTF } from '@react-three/drei';
 import { Group, Vector2 } from 'three';
 import { cameraPath, corals, floor, pathClearance } from './config';
 import { createRandom, floorHeightAt } from '../lib/random';
+import { addCaustics } from '../lib/caustics';
 
 const MAX_ATTEMPTS = 100;
 
@@ -43,6 +44,7 @@ export function Corals() {
         placed.push(p);
       }
     });
+    addCaustics(root);
     return root;
   }, [gltfs]);
 

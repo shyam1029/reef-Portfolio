@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { PlaneGeometry, ShaderMaterial } from 'three';
-import { floor, sunPosition } from './config';
+import { PlaneGeometry, ShaderMaterial, UniformsLib } from 'three';
+import { floor } from './config';
+import { underwaterUniforms } from './underwater';
 import { floorShader } from './shaders';
 import { terrainOffset } from '../lib/random';
 
@@ -19,17 +19,15 @@ export function SeaFloor() {
       new ShaderMaterial({
         ...floorShader,
         uniforms: {
-          uTime: { value: 0 },
-          uSunPosition: { value: sunPosition },
+          ...UniformsLib.fog,
+          uTime: underwaterUniforms.uTime,
+          uSunDir: underwaterUniforms.uSunDir,
           uElevation: { value: floor.elevation },
         },
+        fog: true,
       }),
     [],
   );
-
-  useFrame(({ clock }) => {
-    material.uniforms.uTime.value = clock.elapsedTime;
-  });
 
   return <mesh geometry={geometry} material={material} rotation-x={-Math.PI / 2} position-y={floor.depth} />;
 }
